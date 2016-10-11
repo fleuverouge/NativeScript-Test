@@ -1,0 +1,11 @@
+<GridLayout>
+    <!--<PullToRefresh (refresh)="refreshList()" #pullToRefresh>-->
+        <ScrollView>
+            <StackLayout>
+                <Button text="Nested components" [nsRouterLink]="['/nested-components']"></Button>
+                <Button text="Router outlet" [nsRouterLink]="['/router-outlet']"></Button>
+                <Button text="List view" [nsRouterLink]="['/listview']"></Button>
+            </StackLayout>
+        </ScrollView>
+    <!--</PullToRefresh>-->
+</GridLayout>

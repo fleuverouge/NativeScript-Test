@@ -1,0 +1,42 @@
+<GridLayout rows="auto,auto, *" columns="*">
+   <StackLayout row="1" orientation="horizontal">
+         <Label *ngIf="emptyMessage" textWrap="true" [text]="emptyMessage" class="emptyNotice"> </Label>
+    </StackLayout>
+    <!--<RadListView row="2" [items]="dataItems" pullToRefresh="false" (pullToRefreshInitiated)="reloadData($event)" loadOnDemandMode="Auto" (loadMoreDataRequested)="onLoadMoreItemsRequested($event)" [listViewLayout]="layout">-->
+    <!--<RadListView row="2" [items]="dataItems" [listViewLayout]="layout">
+        <template tkListItemTemplate let-item="item">
+            <StackLayout class="resultBoardContainer" orientation="vertical">
+                <SingleProvinceResultBoard *ngIf="item.data" [result]="item.data" showRegionName="false"></SingleProvinceResultBoard>
+            </StackLayout>
+        </template>
+    </RadListView>-->
+    <ListView row="2" [items]="dataItems">
+        <template let-item="item" let-ri="index">
+             <StackLayout>
+                    <Label [text]='"Item #" + ri'></Label>
+                     <template [ngIf]="item.data">
+               
+                        <GridLayout class="resultBoard" columns="auto,*" [rows]='gridRows(item.data, "auto")'>
+                            <template ngFor let-subArr [ngForOf]="item.data" let-i="index" let-even="even">
+                                <DockLayout [class]='"captionContainer" + (even ? " even" : " odd")' [row]="i">
+                                    <Label [class]='"caption" + (i == 0 ? " special" : "")' [text]="i + 1"></Label>
+                                </DockLayout>
+                                <GridLayout [class]='"numberContainer" + (even ? " even" : " odd")' [row]="i" col="1" [rows]='gridRows(subArr, "auto")' columns="*">
+                                    <template ngFor let-numArr [ngForOf]="subArr" let-arrIndex="index">
+                                        <GridLayout [row]="arrIndex" rows="auto" [columns]='gridRows(numArr, "*")'>
+                                            <template ngFor let-number [ngForOf]="numArr" let-numIndex="index">
+                                                <DockLayout [col]="numIndex" class="numberContainer">
+                                                    <Label [class]='"number" + (i == 0 ? " special" : "")' [text]='number == 0 ? "00" : number'></Label>
+                                                </DockLayout>
+                                            </template>
+                                        </GridLayout>
+                                    </template>
+                                </GridLayout>     
+                            </template>
+                        </GridLayout>
+                </template>
+             </StackLayout>
+        </template>
+    </ListView>
+    <ActivityIndicator rowSpan="3" [busy]="isReloading" [visibility]="isReloading ? 'visible' : 'collapse'" row="1" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+</GridLayout>
